@@ -643,11 +643,14 @@ esp_err_t ClassFlowControll::GetJPGStream(std::string _fn, httpd_req_t *req)
     else
     {
         if (_fn == "alg_roi.jpg")
-        {
+        { 
             CImageBasis* _imgzw = new CImageBasis(flowalignment->ImageBasis);
             flowalignment->DrawRef(_imgzw);
-            if (flowdigit) flowdigit->DrawROI(_imgzw);
-            if (flowanalog) flowanalog->DrawROI(_imgzw);
+            if ((aktstatus.rfind("Aligning", 0) < 0 ) && (aktstatus.rfind("Take Image", 0) < 0 ))   // Draw only if not in Aligning or Tage Image
+            {
+                if (flowdigit) flowdigit->DrawROI(_imgzw);
+                if (flowanalog) flowanalog->DrawROI(_imgzw);
+            } 
             _send = _imgzw;
             Dodelete = true;
         }

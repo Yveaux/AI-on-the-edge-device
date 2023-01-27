@@ -1,7 +1,7 @@
 name: Update Web Installer
 
 on:
-  workflow_dispatch: # Manually triggered
+  [push, workflow_dispatch]
   
 jobs:
   update-web-installer:    

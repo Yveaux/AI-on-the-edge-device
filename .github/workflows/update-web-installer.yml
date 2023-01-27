@@ -1,4 +1,4 @@
-name: Update Web Installer
+name: Update Web Installer (hard coded for v14.0.0-RC1)
 
 on:
   [workflow_dispatch]

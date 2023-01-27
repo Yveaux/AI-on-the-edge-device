@@ -1,7 +1,7 @@
 name: Update Web Installer
 
 on:
-  [push, workflow_dispatch]
+  [workflow_dispatch]
   
 jobs:
   update-web-installer:    

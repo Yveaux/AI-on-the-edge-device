@@ -1,0 +1,43 @@
+name: Update Web Installer
+
+on:
+  workflow_dispatch: # Manually triggered
+  
+jobs:
+  update-web-installer:    
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+
+    # Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+      
+    - name: Add binary to Web Installer and update manifest
+      run: |
+        rm -f docs/binary/firmware.bin
+        wget https://github.com/jomjol/AI-on-the-edge-device/releases/download/v14.0.0-RC1/AI-on-the-edge-device__update__v14.0.0-RC1.zip
+        unzip AI-on-the-edge-device__update__v14.0.0-RC1.zip
+        cp -f firmware.bin docs/binary/firmware.bin
+        cp -f docs/manifest_template.json docs/manifest.json
+        sed -i 's/VERSION/${{ steps.vars.outputs.branch }}/g' docs/manifest.json
+
+    - name: Setup Pages
+      uses: actions/configure-pages@v2
+
+    - name: Upload artifact
+      uses: actions/upload-pages-artifact@v1
+      with:
+        path: 'docs'
+
+    - name: Deploy to GitHub Pages
+      id: deployment
+      uses: actions/deploy-pages@v1   
+  

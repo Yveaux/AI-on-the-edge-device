@@ -27,7 +27,7 @@ jobs:
         unzip AI-on-the-edge-device__update__v14.0.0-RC1.zip
         cp -f firmware.bin docs/binary/firmware.bin
         cp -f docs/manifest_template.json docs/manifest.json
-        sed -i 's/VERSION/${{ steps.vars.outputs.branch }}/g' docs/manifest.json
+        sed -i 's/VERSION/v14.0.0-RC1/g' docs/manifest.json
 
     - name: Setup Pages
       uses: actions/configure-pages@v2

@@ -478,6 +478,12 @@ void wifi_init_sta(const char *_ssid, const char *_password, const char *_hostna
     ESP_ERROR_CHECK(esp_wifi_set_config(WIFI_IF_STA, &wifi_config) );
     ESP_ERROR_CHECK(esp_wifi_start() );
 
+	/* Do not stop after the first found Access Point but scan for other
+	 * (possibly nearer/stronger) Access Points.
+	 * See https://www.esp32.com/viewtopic.php?f=19&t=18979&sid=827d644db405788d11e5747ec5e5f519&start=10 */
+	wifi_config.sta.scan_method = WIFI_ALL_CHANNEL_SCAN;
+    wifi_config.sta.sort_method = WIFI_CONNECT_AP_BY_SIGNAL;
+
     if (_hostname != NULL)
     {
         esp_err_t ret = tcpip_adapter_set_hostname(TCPIP_ADAPTER_IF_STA , _hostname);
